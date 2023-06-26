@@ -361,13 +361,14 @@ definitions:
             eln:
               component: StringEditQuantity
         sample_id:
+          m_annotations:
             tabular:
               name: AFMReflectanceSEM/Sample
             eln:
               component: StringEditQuantity
         datetime:
           type: Datetime
-          type: str
+          m_annotations:
             tabular:
               name: AFMReflectanceSEM/Surface State
             eln:
