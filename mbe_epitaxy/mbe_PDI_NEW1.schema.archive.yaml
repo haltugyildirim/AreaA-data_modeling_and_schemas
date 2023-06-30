@@ -1,0 +1,628 @@
+definitions:
+  name: 'MBI PDI'
+  sections:
+    mbeGrowth:
+      more:
+        label_quantity: sample_id
+      base_sections:
+      - nomad.datamodel.metainfo.eln.Measurement
+      - nomad.datamodel.data.EntryData
+      m_annotations:
+        eln:
+      quantities:
+        method:
+          type: str
+          default: "MOVPE HRXRD"
+        description:
+          type: str
+          description: "Notes and comments."
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+              label: "Notes"
+        sample_id:
+          type: str
+          m_annotations:
+            tabular:
+              name: HRXRD/Sample
+            eln:
+              component: StringEditQuantity
+        datetime:
+          type: Datetime
+          m_annotations:
+            tabular:
+              name: HRXRD/Date
+            eln:
+              component: DateTimeEditQuantity
+        phase:
+          type: str
+          description: Phase type obtained from HRXRD
+          m_annotations:
+            tabular:
+              name: HRXRD/Phase
+            eln:
+              component: StringEditQuantity
+        peak_position_2theta:
+          type: np.float64
+          unit: degree
+          description: "Peak Position - 2theta"
+          m_annotations:
+            tabular:
+              name: HRXRD/Peak Position - 2theta
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: degree
+        peak_fwhm_2theta:
+          type: np.float64
+          unit: degree
+          description: "Peak Position - 2theta"
+          m_annotations:
+            tabular:
+              name: HRXRD/Peak FWHM - 2theta
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: degree
+        peak_position_omega:
+          type: np.float64
+          unit: degree
+          description: "Peak Position - Omega"
+          m_annotations:
+            tabular:
+              name: HRXRD/Peak Position - Omega
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: degree
+        peak_fwhm_rocking_curve:
+          type: str
+          description: Peak FWHM Rocking Curve
+          m_annotations:
+            tabular:
+              name: HRXRD/Peak FWHM Rocking Curve
+            eln:
+              component: StringEditQuantity
+        reflection:
+          type: str
+          description: Peak FWHM Rocking Curve
+          m_annotations:
+            tabular:
+              name: HRXRD/Reflection
+            eln:
+              component: StringEditQuantity
+    GrowthRun:
+      base_sections:
+      - nomad.datamodel.metainfo.eln.Process
+      - nomad.datamodel.data.EntryData
+      m_annotations:
+        eln:
+      quantities:
+        method:
+          type: str
+          default: "MOVPE Growth Run"
+        description:
+          type: str
+          description: "Notes and comments."
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+              label: "Notes"
+      sub_sections:
+        growth_run_steps:
+          repeats: true
+          section:
+            base_sections:
+            - '#/GrowthRunStep'
+    GrowthRunStep:
+      m_annotations:
+        eln:
+          # hide: [descritpion]
+      quantities:
+        name:
+          type: str
+          description: what this step consists of
+          m_annotations:
+            tabular:
+              name: GrowthRun/Name
+            eln:
+              component: StringEditQuantity
+        elapsed_time:
+          type: np.float64
+          unit: minute
+          description: Past time since process start
+          m_annotations:
+            tabular:
+              name: GrowthRun/Duration
+            eln:
+              component: NumberEditQuantity #DateTimeEditQuantity
+              defaultDisplayUnit: minute
+        step_number:
+          type: int
+          description: sequential number of the step on going
+          m_annotations:
+            tabular:
+              name: GrowthRun/Step
+            eln:
+              component: NumberEditQuantity
+        temperature:
+          type: np.float64
+          unit: celsius
+          description: FILL THE DESCRIPTION
+          m_annotations:
+            tabular:
+              name: GrowthRun/Temperature
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: celsius
+        pressure:
+          type: np.float64
+          unit: mbar
+          description: FILL THE DESCRIPTION
+          m_annotations:
+            tabular:
+              name: GrowthRun/Pressure
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: mbar
+        flow_metal_carrier:
+          type: np.float64
+          unit: mbar
+          description: FILL THE DESCRIPTION
+          m_annotations:
+            tabular:
+              name: GrowthRun/Flow Metal Carrier
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: mbar
+        metal_inner_valve:
+          type: int
+          description: inner valve (0-200)
+          m_annotations:
+            tabular:
+              name: GrowthRun/Metal Inner Valve
+            eln:
+              component: SliderEditQuantity
+              minValue: 0
+              maxValue: 200
+        metal_outer_valve:
+          type: int
+          description: outer valve (0-200)
+          m_annotations:
+            tabular:
+              name: GrowthRun/Metal Outer Valve
+            eln:
+              component: SliderEditQuantity
+              minValue: 0
+              maxValue: 200
+        flow_oxydant_carrier:
+          type: np.float64
+          unit: mbar
+          description: FILL THE DESCRIPTION
+          m_annotations:
+            tabular:
+              name: GrowthRun/Flow Oxydant Carrier
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: mbar
+        oxydant_inner_valve:
+          type: int
+          description: inner valve (0-200)
+          m_annotations:
+            tabular:
+              name: GrowthRun/Oxydant Inner Valve
+            eln:
+              component: SliderEditQuantity
+              minValue: 0
+              maxValue: 200
+        oxydant_outer_valve:
+          type: int
+          description: outer valve (0-200)
+          m_annotations:
+            tabular:
+              name: GrowthRun/Oxydant Outer Valve
+            eln:
+              component: SliderEditQuantity
+              minValue: 0
+              maxValue: 200
+        purge_flow:
+          type: np.float64
+          unit: cm ** 3 / minute
+          description: FILL THE DESCRIPTION
+          m_annotations:
+            tabular:
+              name: GrowthRun/Purge Flow
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: cm ** 3 / minute
+        uniform_valve:
+          type: int
+          description: inner valve (0-200)
+          m_annotations:
+            tabular:
+              name: GrowthRun/Uniform Valve
+            eln:
+              component: SliderEditQuantity
+              minValue: 0
+              maxValue: 200
+        purge_valve:
+          type: int
+          description: inner valve (0-200)
+          m_annotations:
+            tabular:
+              name: GrowthRun/Purge Valve
+            eln:
+              component: SliderEditQuantity
+              minValue: 0
+              maxValue: 200
+        notes:
+          type: str
+          description: FILL THE DESCRIPTION
+          m_annotations:
+            tabular:
+              name: GrowthRun/Notes
+            eln:
+              component: StringEditQuantity
+      sub_sections:
+        Bubblers:
+          repeats: true
+          section:
+            more:
+              label_quantity: material
+            quantities:
+              material:
+                type: str
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Bubbler Material
+                  eln:
+                    component: StringEditQuantity
+              dilution:
+                type: np.float64
+                unit: cm ** 3 / minute
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Bubbler Dilution
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: cm ** 3 / minute
+              inject:
+                type: np.float64
+                unit: cm ** 3 / minute
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Inject
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: cm ** 3 / minute
+              pressure:
+                type: np.float64
+                unit: mbar
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Bubbler Pressure
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: mbar
+              temperature:
+                type: np.float64
+                unit: mbar
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Bubbler Temp
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: mbar
+              partial_pressure:
+                type: np.float64
+                unit: mbar
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Partial Pressure
+                  # plot:
+                  #   x: duration
+                  #   y: TMG_partial_pressure
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: mbar
+              flow_carrier:
+                type: np.float64
+                unit: cm ** 3 / minute
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Flow Carrier
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: cm ** 3 / minute
+              valve:
+                type: bool
+                description: is valve open? true/false
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Bubbler Valve
+                  eln:
+                    component: BoolEditQuantity
+        GasSource:
+          repeats: true
+          section:
+            more:
+              label_quantity: material
+            quantities:
+              material:
+                type: str
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Gas Cylinder Material
+                  eln:
+                    component: StringEditQuantity
+              dilution_in_cylinder:
+                type: np.float64
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Dilution in Cylinder
+                  eln:
+                    component: NumberEditQuantity
+              flow_from_mfc:
+                type: np.float64
+                unit: cm ** 3 / minute
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Flow from MFC
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: cm ** 3 / minute
+              effective_flow:
+                type: np.float64
+                unit: cm ** 3 / minute
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Effective Flow
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: cm ** 3 / minute
+              partial_pressure:
+                type: np.float64
+                unit: mbar
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Gas Partial Pressure
+                  # plot:
+                  #   x: duration
+                  #   y: TMG_partial_pressure
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: mbar
+              cylinder_pressure:
+                type: np.float64
+                unit: mbar
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Cylinder Pressure
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: mbar
+              valve:
+                type: bool
+                description: is valve open? true/false
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/Gas Valve
+                  eln:
+                    component: BoolEditQuantity
+        MistSource1:
+          repeats: true
+          section:
+            more:
+              label_quantity: material
+            quantities:
+              material:
+                type: str
+                description: FILL THE DESCRIPTION
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/MIST Flow MFC
+                  eln:
+                    component: StringEditQuantity
+              valve:
+                type: bool
+                description: is valve open? true/false
+                m_annotations:
+                  tabular:
+                    name: GrowthRun/MIST Valve
+                  eln:
+                    component: BoolEditQuantity
+    Substrate:
+      base_sections:
+      - nomad.datamodel.metainfo.eln.Ensemble
+      - nomad.datamodel.data.EntryData
+      quantities:
+        alias:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Substrates
+        description:
+          type: str
+          description: "Notes and comments."
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+              label: "Notes"
+        name:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Material
+        lab_id:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Substrate ID
+        supplier:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Supplier
+        element_list:
+          type: str
+          shape: ['*']
+          description: The Elements and the corresponding isotope which are used in the Substrate.
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        orientation:
+          type: str
+          description: crystallographic orientation of the substrate in [hkl]
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Orientation
+        off_cut:
+          type: np.float64
+          unit: degrees
+          description: Off-cut angle to the substrates surface
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+            tabular:
+              name: Substrate/Off-cut
+        off_cut_orientation:
+          type: str
+          description: Off-cut orientation to the substrates surface
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Off-cut Orientation
+        doping_level:
+          type: np.float64
+          #unit: wt %
+          description: Chemical doping level of electrically conductive substrates
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+            tabular:
+              name: Substrate/Doping Level
+        doping_species:
+          type: str
+          description: Doping species to obtain electrical conductivity in the substrates
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Doping Species
+        size_diameter:
+          type: np.float64
+          # unit: inch
+          description: diameter
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+              # defaultDisplayUnit: inch
+            tabular:
+              name: Substrate/Size Diameter
+        size_X:
+          type: np.float64
+          unit: millimeter
+          description: X length
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: millimeter
+            tabular:
+              name: Substrate/Size X
+        size_Y:
+          type: np.float64
+          unit: millimeter
+          description: Y length
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+              defaultDisplayUnit: millimeter
+            tabular:
+              name: Substrate/Size Y
+        susceptor:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Susceptor
+        mask:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Mask
+        pocket:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+            tabular:
+              name: Substrate/Pocket
+        annealing:
+          type: bool
+          description: Is the sample annealed?
+          m_annotations:
+            eln:
+              component: BoolEditQuantity
+            tabular:
+              name: Substrate/Annealing
+        cleaning:
+          type: bool
+          description: FILL
+          m_annotations:
+            eln:
+              component: BoolEditQuantity
+            tabular:
+              name: Substrate/Cleaning
+        regrowth:
+          type: bool
+          description: FILL
+          m_annotations:
+            eln:
+              component: BoolEditQuantity
+            tabular:
+              name: Substrate/Regrowth
+        documentation:
+          type: str
+          description: pdf files containing certificate and other documentation
+          m_annotations:
+            browser:
+              adaptor: RawFileAdaptor  # Allows to navigate to files in the data browser
+            eln:
+              component: FileEditQuantity
+        notes:
+          type: str
+          description: FILL
+          m_annotations:
+            eln:
+              component: StringEditQuantity
